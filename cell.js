@@ -5,27 +5,62 @@ class Cell{
         this.size = size;
         this.solution = solution;
         this.activated = false;
-        this.lockes = false;
+        this.empty = false
+        this.locked = false;
 
     }
 
     activate(){
-        this.activated = true;
+        if(this.solution){
+            this.activated = true
+            return true
+        } else{
+            this.locked = true
+            return false
+        }
     }
 
     deActivate(){
+        this.empty = !this.empty;
         
     }
 
     show(xOffset, yOffset){
-        if(this.activated){
+        strokeWeight(1);
+        if (this.activated) {
             fill(51);
             stroke(51);
+            rect(
+                (this.x + xOffset) * this.size, 
+                (this.y + yOffset) * this.size, 
+                this.size, 
+                this.size
+                );
+        } else if (this.locked || this.empty) {
+            fill(255);
+            stroke(51);
+
+            rect(
+                (this.x + xOffset) * this.size, 
+                (this.y + yOffset) * this.size, 
+                this.size, 
+                this.size
+                );
+            line(
+                (this.x + xOffset) * this.size, 
+                (this.y + yOffset) * this.size, 
+                (this.x + xOffset + 1) * this.size, 
+                (this.y + yOffset + 1) * this.size, 
+                );
         } else {
             fill(255);
             stroke(51);
-        }
-        strokeWeight(2);
-        rect((this.x + xOffset) * this.size, (this.y+yOffset) * this.size, this.size, this.size);
+            rect(
+                (this.x + xOffset) * this.size, 
+                (this.y + yOffset) * this.size, 
+                this.size, 
+                this.size
+                );
+            }
     }
 }

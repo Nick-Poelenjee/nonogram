@@ -10,7 +10,7 @@ class Grid {
         this.maxCellsCols = 0;
 
         this.storage = [];
-
+       
         for (let j = 0; j < this.rows; j++) {
             for (let i = 0; i < this.cols; i++) {
                 this.storage.push(new Cell(i, j, solution[j][i], cellSize));
@@ -25,10 +25,78 @@ class Grid {
         return this.cell(x, y);
     }
 
+    showOutsideLines(height, width, xOffset, yOffset){
+        stroke(51)
+        strokeWeight(4)
+        //Left outside line
+        line(
+            xOffset,
+            0,
+            xOffset,
+            height
+        )
+        // top outside line
+        line(
+            0,
+            yOffset,
+            width,
+            yOffset
+        )
+        //right outside line
+        line(
+            width,
+            0,
+            width,
+            height
+        )
+        // bottom line
+        line(
+            0,
+            height,
+            width,
+            height
+        )
+    }
+
+    showSubGrid(height, width, xOffset, yOffset, subGridDinstance){
+        stroke(51)
+        strokeWeight(3)
+        //vertical lines
+        for (let i = xOffset; i < width; i = i + subGridDinstance  ) {
+            line(
+                i,
+                yOffset,
+                i,
+                height
+           ) 
+        }
+        //horizontal lines
+        for (let i = yOffset; i < width; i = i + subGridDinstance  ) {
+            line(
+                xOffset,
+                i,
+                width,
+                i
+           ) 
+        }
+       
+    }
+
     showGrid(){
+        let xOffset = this.maxCellsRows * this.cellSize;
+        let yOffset = this.maxCellsCols * this.cellSize;
+        let subGridDinstance = 5 * this.cellSize
+        let height = (this.rows * this.cellSize) + yOffset
+        let width = (this.cols * this.cellSize) + xOffset
+
+       this.showOutsideLines(height, width, xOffset, yOffset)
+       
+
         for (let cell of this.storage) {
             cell.show(this.maxCellsRows, this.maxCellsCols);
         }
+        this.showSubGrid(height, width, xOffset, yOffset, subGridDinstance)
+
     }
 
     checkWinning() {
@@ -101,7 +169,8 @@ class Grid {
         this.maxCellsRows = max(rowSizes);
     }
 
-    showRows() {
+    showRows() { 
+        let count_row = 1
         for (let j=0; j < this.rows; j++) {
             for(let i=0; i < this.maxCellsRows; i++) {
                 stroke(51);
@@ -150,9 +219,13 @@ class Grid {
             }
         }
     }
+
     show() {
+        if(this.rows < 15 || this.cols < 15){
+            alert('nonogram is to small')
+        }
         this.showRows();
-        this.showCols();
+        this.showCols();      
         this.showGrid();
     }
 }

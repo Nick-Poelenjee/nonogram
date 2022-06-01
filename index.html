@@ -5,17 +5,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nonogram</title>
-  <style>
-  </style>
+  <link rel="stylesheet" href="style.css">
   <script src="p5.js"></script>
-
-
   <script src="cell.js"></script>
   <script src="grid.js"></script>
-  <script src="sketch.js"></script>
+  <script>let level = 'level3'</script>
+  <script src="game.js"></script>
 </head>
 
 <body oncontextmenu="return false;">
+  <div>
+      <button id='level_1' onclick="level = level1">Level 1</button>
+      <button id='level_2'>level 2</button>
+      <button id='level_3'>level 3</button>
+    </div>
+    <div>
+      <h3>number of mistakes made in this level: <span id="max_mistakes"> 0</span></h3>
+      <h3>number of allowed mistakes: <span id="mistakes"> 0</span></h3>
+    </div>
 </body>
 
 </html>
